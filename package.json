@@ -1,18 +1,19 @@
 {
-  "name": "fatwa",
+  "name": "fatwas",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
-    "sails": "^1.2.4",
-    "grunt": "1.0.4",
-    "sails-hook-grunt": "^4.0.0",
-    "sails-hook-orm": "^2.1.1",
-    "sails-hook-sockets": "^2.0.0",
     "@sailshq/connect-redis": "^3.2.1",
+    "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
-    "@sailshq/lodash": "^3.10.3"
+    "grunt": "1.0.4",
+    "sails": "^1.5.2",
+    "sails-hook-grunt": "^5.0.0",
+    "sails-hook-orm": "^4.0.0",
+    "sails-hook-sockets": "^2.0.0",
+    "sails-mysql": "2.0.0"
   },
   "devDependencies": {
     "eslint": "5.16.0"
@@ -26,9 +27,9 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/akhil/fatwa.git"
+    "url": "git://github.com/anonymous node/sails user/fatwas.git"
   },
-  "author": "akhil",
+  "author": "anonymous node/sails user",
   "license": "",
   "engines": {
     "node": "^16.13"
