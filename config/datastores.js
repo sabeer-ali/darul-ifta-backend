@@ -51,6 +51,4 @@ module.exports.datastores = {
     adapter: 'sails-mysql',
     url: 'mysql://root:@localhost:3306/fatwas',
   },
-
-
 };

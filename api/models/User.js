@@ -8,6 +8,7 @@
 module.exports = {
 
   attributes: {
+    fullName : {type : 'text'}
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
