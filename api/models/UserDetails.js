@@ -7,7 +7,7 @@
 
 module.exports = {
   attributes: {
-    id: { type: "number" },
+    // id: { type: "number" },
     user_id: { type: "number" },
     profile_pic: { type: "string" },
     address: { type: "string" },

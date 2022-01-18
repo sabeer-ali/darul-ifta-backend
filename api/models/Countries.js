@@ -7,7 +7,7 @@
 
 module.exports = {
   attributes: {
-    id: { type: "number", require: true },
+    // id: { type: "number", require: true },
     code: { type: "string" },
     name: { type: "string" },
     phonecode: { type: "string" },
