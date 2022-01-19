@@ -8,6 +8,6 @@
 module.exports = {
   attributes: {
     // id: { type: "number", require: true },
-    titil: { type: "string" },
+    title: { type: "string" },
   },
 };

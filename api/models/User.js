@@ -15,8 +15,15 @@ module.exports = {
     remember_token: { type: "string" },
     created_at: { type: "ref", columnType: "datetime" },
     updated_at: { type: "ref", columnType: "datetime" },
-    user_type: { type: "number" },
-    user_status: { type: "number" },
+    user_type: {
+      model: "UserTypes",
+    },
+    user_status: {
+      model: "UserStatus",
+    },
+    madhab: {
+      model: "Madhab",
+    },
     username: { type: "string" },
     phone: { type: "string" },
     initial_token: { type: "string" },
