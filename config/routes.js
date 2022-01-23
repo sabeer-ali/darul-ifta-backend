@@ -21,7 +21,10 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
-
+   //User
+   'POST /user/login':'UserController.login',
+   'POST /user/signup':'UserController.signup',
+ 
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
