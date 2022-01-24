@@ -4,14 +4,37 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
- const Joi = require('joi');
+const Joi = require('joi');
+const clientID = "756091233237-qdi6vep1g8h25n2o6dmcp6n3vv7t41fi.apps.googleusercontent.com"
+const { OAuth2Client, JWT } = require("google-auth-library");
+const client = new OAuth2Client(clientID);
 
 module.exports = {
+  authGoogle: async (req, res) => {
+    const { token } = req.body;
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: clientID,
+    });
+    const googleData = ticket.getPayload();
+    let email = googleData.email;
+    let name = googleData.name;
+    const user = await User.findOne({ email });
+    if (!user) {
+      // -------------------User not exist ----------
+      await User.create({ email, name });
+    } else {
+      // --------------------User exist ----------
+      const token = await JWTService.issuer({ user: user.id }, '1 day');
+      return res.ok({ token: token })
+    }
+  },
+
   /**
    * `UserController.signup()`
    */
 
-   signup: async function (req, res) {
+  signup: async function (req, res) {
     try {
       const schema = Joi.object({
         email: Joi.string()
@@ -59,8 +82,8 @@ module.exports = {
       if (!matchPassword) {
         return res.badRequest({ err: "Unauthorized" });
       }
-      const token = await JWTService.issuer({user:user.id},'1 day');
-      return res.ok({token:token})
+      const token = await JWTService.issuer({ user: user.id }, '10 day');
+      return res.ok({ token: token })
     } catch (err) {
       if (err.name == "ValidationError") {
         return res.badRequest(err);
@@ -68,7 +91,6 @@ module.exports = {
       return res.serverError(err);
     }
   }
-
 
 };
 
