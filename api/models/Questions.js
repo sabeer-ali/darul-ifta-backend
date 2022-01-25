@@ -22,6 +22,6 @@ module.exports = {
     reject_by: { model: "User" },
     reject_reason: { model: "RejectedReasons" },
     created_at: { type: "ref", columnType: "datetime" },
-    updated_at: { type: "ref", columnType: "datetime" },
+    updated_at: { type: "ref", columnType: "datetime" }
   },
 };

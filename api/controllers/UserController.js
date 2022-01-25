@@ -6,7 +6,7 @@
  */
 const Joi = require('joi');
 const clientID = "756091233237-qdi6vep1g8h25n2o6dmcp6n3vv7t41fi.apps.googleusercontent.com"
-const { OAuth2Client, JWT } = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(clientID);
 
 module.exports = {
@@ -21,10 +21,8 @@ module.exports = {
     let name = googleData.name;
     const user = await User.findOne({ email });
     if (!user) {
-      // -------------------User not exist ----------
       await User.create({ email, name });
     } else {
-      // --------------------User exist ----------
       const token = await JWTService.issuer({ user: user.id }, '1 day');
       return res.ok({ token: token })
     }
@@ -90,7 +88,21 @@ module.exports = {
       }
       return res.serverError(err);
     }
+  },
+
+  /**
+   * `UserController.dashboardDataSets()`
+   */
+  dashboardDataSets: async function (req, res) {
+    let response = {}
+    response.questions = await Questions.count();
+    response.pending = await Questions.count({ status: 1 });
+    response.answered = await Questions.count({ status: 2 });
+    response.rejected = await Questions.count({ status: 3 });
+    response.mufties = await User.count({ user_type: 2 });
+    return res.ok(response)
   }
+
 
 };
 

@@ -25,7 +25,10 @@ module.exports.routes = {
   'POST /user/login': 'UserController.login',
   'POST /user/signup': 'UserController.signup',
   'POST /user/authGoogle': 'UserController.authGoogle',
+  'GET /user/dashboardDataSets': 'UserController.dashboardDataSets',
 
+  //Question
+  'GET /question/searchquestions': 'QuestionsController.searchQuestions',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
