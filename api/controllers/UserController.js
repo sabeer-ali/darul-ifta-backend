@@ -46,6 +46,11 @@ module.exports = {
       });
       const { email, password } = await schema.validateAsync(req.allParams());
       const encryptedPassword = await UtilService.hashPassword(password);
+      const userExist = await User.find({ email: email });
+      if (userExist.length) {
+        res.status(400);
+        return res.json('User already exists!');
+      }
       const user = await User.create({ email, password: encryptedPassword });
       return res.ok(user);
     } catch (err) {

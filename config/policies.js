@@ -17,6 +17,10 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': 'isLoggedIn',
+  UserController: {
+    'login': true,
+    'signup': true,
+  }
 
 };

@@ -10,7 +10,7 @@ module.exports = {
     // id: { type: "number", require: true },
     name: { type: "string" },
     display_title: { type: "string" },
-    email: { type: "string" },
+    email: { type: "string", unique: true },
     password: { type: "string" },
     remember_token: { type: "string" },
     created_at: { type: "ref", columnType: "datetime" },
