@@ -95,11 +95,12 @@ module.exports = {
    */
   dashboardDataSets: async function (req, res) {
     let response = {}
+    response.mustafthies = await User.count({ user_type: 3 });
     response.questions = await Questions.count();
     response.pending = await Questions.count({ status: 1 });
-    response.answered = await Questions.count({ status: 2 });
-    response.rejected = await Questions.count({ status: 3 });
-    response.mufties = await User.count({ user_type: 2 });
+    response.answered = await Questions.count({ status: 10 });
+    response.rejected = await Questions.count({ status: 2 });
+
     return res.ok(response)
   }
 
