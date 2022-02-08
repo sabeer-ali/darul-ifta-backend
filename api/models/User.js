@@ -7,7 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: { type: "number", require: true },
     name: { type: "string" },
     display_title: { type: "string" },
     email: { type: "string", unique: true },
@@ -30,5 +29,8 @@ module.exports = {
     email_verified: { type: "number" },
     google_id: { type: "string" },
     sort_order: { type: "number" },
+    address: { type: "string" },
+    street_address: { type: "string" },
+    pin_code: { type: "number" },
   },
 };

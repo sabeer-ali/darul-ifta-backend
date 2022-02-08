@@ -7,10 +7,9 @@
 
 module.exports = {
   attributes: {
-    // id: { type: "number", require: true },
     title: { type: "string" },
     description: { type: "string" },
-    mufti: { type: "number" },
+    mufti: { model: "user" },
     created_at: { type: "ref", columnType: "datetime" },
     updated_at: { type: "ref", columnType: "datetime" },
   },

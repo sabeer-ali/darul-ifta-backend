@@ -8,7 +8,7 @@
 module.exports = {
   attributes: {
     // id: { type: "number" },
-    user_id: { type: "number" },
+    user_id: { model: "User" },
     madhab: { model: "madhab" },
     category: { model: "Category" },
     sub_category: { model: "SubCategories" },
