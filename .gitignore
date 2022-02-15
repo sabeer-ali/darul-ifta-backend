@@ -88,8 +88,9 @@ config/local.js
 ################################################
 
 node_modules
-config/env/
+config/env/*
 config/datastores.js
+package-lock.json
 
 
 ################################################
