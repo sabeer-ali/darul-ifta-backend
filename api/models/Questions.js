@@ -7,7 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: { type: "number" },
     user_id: { model: "User" },
     madhab: { model: "madhab" },
     category: { model: "Category" },
@@ -22,6 +21,6 @@ module.exports = {
     reject_by: { model: "User" },
     reject_reason: { model: "RejectedReasons" },
     created_at: { type: "ref", columnType: "datetime" },
-    updated_at: { type: "ref", columnType: "datetime" }
+    updated_at: { type: "ref", columnType: "datetime" },
   },
 };
