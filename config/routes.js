@@ -27,10 +27,16 @@ module.exports.routes = {
   "GET /user/dashboardDataSets": "UserController.dashboardDataSets",
 
   //Question
-  "GET /question/searchquestions": "QuestionsController.searchQuestions",
+  "GET /questions/searchquestions": "QuestionsController.searchQuestions",
+  "GET /questions/counts/:id": "QuestionsController.counts",
+
   //subcategories
   "POST /subcategories": "SubCategoriesController.post",
   "PUT /subcategories": "SubCategoriesController.put",
+
+  // Generals
+  "GET /Generals": "GeneralsController.get",
+
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *

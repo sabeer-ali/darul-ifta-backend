@@ -50,7 +50,6 @@ module.exports = {
         },
       }).fetch();
     }
-    console.log("subCat ==> ", subCat);
 
     if (!subCat.length) {
       let subcat;

@@ -7,7 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: { type: "number", require: true },
     question_id: { type: "number" },
     answer: { type: "string" },
     reference: { type: "string" },
