@@ -37,6 +37,9 @@ module.exports.routes = {
   // Generals
   "GET /Generals": "GeneralsController.get",
 
+  // Answers
+  "POST /answers": "AnswersController.post",
+
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *

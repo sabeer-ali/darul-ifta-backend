@@ -9,11 +9,11 @@ module.exports = {
   attributes: {
     question_id: { type: "number" },
     answer: { type: "string" },
-    reference: { type: "string" },
-    status: { type: "number" },
-    answered_by: { type: "number" },
+    reference: { type: "json" },
+    status: { model: "QuestionStatus" },
+    answered_by: { model: "User" },
     answered_date: { type: "ref", columnType: "datetime" },
-    verified_by: { type: "number" },
+    verified_by: { model: "User" },
     verified_date: { type: "ref", columnType: "datetime" },
   },
 };
