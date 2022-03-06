@@ -7,25 +7,48 @@
 
 module.exports = {
   post: async (req, res) => {
-    const { question_id, status, answered_by, verified_by } = req.allParams();
-    console.log("req data", req.allParams());
-    let qData = await Questions.find({ id: question_id });
+    const { answer, reference, question_id, status, answered_by, verified_by } =
+      req.allParams();
+    console.log(
+      "req data",
+      answer,
+      reference,
+      question_id,
+      status,
+      answered_by,
+      verified_by
+    );
 
     if (status)
-      Questions.update({ id: question_id }).set({
-        status,
+      await Questions.update({ id: question_id }).set({
+        status: status,
       });
 
     if (answered_by)
-      Questions.update({ id: question_id }).set({
+      await Questions.update({ id: question_id }).set({
         mufti: answered_by,
       });
-    if (verifier)
-      Questions.update({ id: question_id }).set({
-        mufti: verified_by,
+    if (verified_by)
+      await Questions.update({ id: question_id }).set({
+        verifier: verified_by,
       });
 
-    console.log("data", qData);
-    res.ok("Done");
+    await Answers.find({ where: { question_id } }).exec(async (err, data) => {
+      console.log("ERR, DAta", err, data, !data.length);
+      if (!data.length) {
+        await Answers.create({
+          question_id,
+          answer,
+          reference,
+          status,
+          answered_by,
+          verified_by,
+        }).fetch();
+      }
+    });
+
+    let resultData = await Answers.find({ where: { question_id } });
+
+    res.ok(resultData);
   },
 };
