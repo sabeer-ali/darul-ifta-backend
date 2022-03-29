@@ -50,7 +50,7 @@ module.exports.models = {
    *                                                                          *
    ***************************************************************************/
 
-  migrate: "safe",
+  migrate: "drop",
 
   /***************************************************************************
    *                                                                          *
@@ -65,9 +65,17 @@ module.exports.models = {
    ***************************************************************************/
 
   attributes: {
-    createdAt: { type: "ref", columnType: "datetime", autoCreatedAt: true },
-    updatedAt: { type: "ref", columnType: "datetime", autoUpdatedAt: true },
-    id: { type: "number", autoIncrement: true },
+    createdAt: {
+      type: "ref",
+      columnType: "datetime",
+      autoCreatedAt: true,
+    },
+    updatedAt: {
+      type: "ref",
+      columnType: "datetime",
+      autoUpdatedAt: true,
+    },
+    id: { type: "number", autoIncrement: true, required: true },
     //--------------------------------------------------------------------------
     //  /\   Using MongoDB?
     //  ||   Replace `id` above with this instead:

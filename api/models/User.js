@@ -7,13 +7,11 @@
 
 module.exports = {
   attributes: {
-    name: { type: "string" },
+    name: { type: "string", allowNull: false },
     display_title: { type: "string" },
-    email: { type: "string", unique: true },
+    email: { type: "string", unique: true, required: true, allowNull: false },
     password: { type: "string" },
     remember_token: { type: "string" },
-    created_at: { type: "ref", columnType: "datetime" },
-    updated_at: { type: "ref", columnType: "datetime" },
     user_type: {
       model: "UserTypes",
     },
@@ -30,7 +28,12 @@ module.exports = {
     google_id: { type: "string" },
     sort_order: { type: "number" },
     address: { type: "string" },
-    street_address: { type: "string" },
     pin_code: { type: "number" },
+    profile_pic: { type: "string" },
+    gender: { type: "string" },
+    country: { model: "Countries" },
+    qualification: { type: "string" },
+    work_place: { type: "string" },
+    dob: { type: "ref", columnType: "datetime" },
   },
 };

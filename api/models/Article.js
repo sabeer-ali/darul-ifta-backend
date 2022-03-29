@@ -10,7 +10,5 @@ module.exports = {
     title: { type: "string" },
     description: { type: "string" },
     mufti: { model: "user" },
-    created_at: { type: "ref", columnType: "datetime" },
-    updated_at: { type: "ref", columnType: "datetime" },
   },
 };

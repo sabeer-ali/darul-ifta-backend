@@ -12,20 +12,40 @@ const client = new OAuth2Client(clientID);
 
 module.exports = {
   authGoogle: async (req, res) => {
-    const { token } = req.body;
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: clientID,
-    });
-    const googleData = ticket.getPayload();
-    let email = googleData.email;
-    let name = googleData.name;
-    const user = await User.findOne({ email });
-    if (!user) {
-      await User.create({ email, name });
-    } else {
-      const token = await JWTService.issuer({ user: user.id }, "1 day");
-      return res.ok({ token: token });
+    const { token, email, name, id, photoUrl } = req.body;
+    console.log("Req Body", req.body);
+    // const ticket = await client.verifyIdToken({
+    //   idToken: token,
+    //   audience: clientID,
+    // });
+    // const googleData = ticket.getPayload();
+    // let email = googleData.email;
+    // let name = googleData.name;
+    try {
+      const user = await User.findOne({ email });
+      console.log("Userrr", user);
+      if (!user) {
+        await User.create({
+          email,
+          name,
+          google_id: id,
+          profile_pic: photoUrl,
+          user_type: 3,
+        });
+        const user = await User.findOne({ email });
+        res.ok(user);
+      } else {
+        // const token = await JWTService.issuer({ user: user.id }, "1 day");
+        // return res.ok({ token: token });
+        return res.ok(user);
+      }
+    } catch (error) {
+      console.log("Error", error.details);
+      return res.serverError({
+        data: [],
+        message: error.details,
+        status: false,
+      });
     }
   },
 
@@ -66,27 +86,77 @@ module.exports = {
    */
   login: async function (req, res) {
     try {
+      console.log("req.allParams()", req.allParams());
       const schema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
       });
       const { email, password } = await schema.validateAsync(req.allParams());
       const user = await User.findOne({ email });
+
       if (!user) {
-        return res.notFound();
+        return res.json({
+          data: [],
+          message: "No User Found",
+          status: false,
+        });
       }
-      const matchPassword = await UtilService.comparePassword(
-        password,
-        user.password
-      );
+      const matchPassword = password === user.password;
       if (!matchPassword) {
-        return res.badRequest({ err: "Unauthorized" });
+        return res.json({
+          data: [],
+          message: "Password didn't matched",
+          status: false,
+        });
       }
-      const token = await JWTService.issuer({ user: user.id }, "10 day");
-      return res.ok({ token: token });
+      // const token = await JWTService.issuer({ user: user.id }, "10 day");
+      // return res.ok({ token: token });
+      return res.ok({ data: user, message: "success", status: true });
     } catch (err) {
       if (err.name == "ValidationError") {
-        return res.badRequest(err);
+        return res.json({
+          data: [],
+          message: err.details[0].message,
+          status: false,
+        });
+      }
+      return res.serverError(err);
+    }
+  },
+  // Check Mail for User
+  checkMail: async function (req, res) {
+    try {
+      console.log("req.allParams()", req.allParams());
+      const schema = Joi.object({
+        email: Joi.string().email().required(),
+      });
+      const { email } = await schema.validateAsync(req.allParams());
+      const user = await User.findOne({
+        where: { email },
+        select: ["email", "profile_pic"],
+      });
+
+      console.log("user", user);
+
+      if (!user) {
+        return res.json({
+          data: [],
+          message: "No User Found",
+          status: false,
+        });
+      }
+      return res.json({
+        data: user,
+        message: "Success",
+        status: true,
+      });
+    } catch (err) {
+      if (err.name == "ValidationError") {
+        return res.json({
+          data: [],
+          message: err.details[0].message,
+          status: false,
+        });
       }
       return res.serverError(err);
     }
@@ -102,7 +172,6 @@ module.exports = {
     response.pending = await Questions.count({ status: 1 });
     response.answered = await Questions.count({ status: 10 });
     response.rejected = await Questions.count({ status: 2 });
-
     return res.ok(response);
   },
 };

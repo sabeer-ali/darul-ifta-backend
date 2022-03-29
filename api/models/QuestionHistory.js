@@ -7,7 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: { type: "number", require: true },
     question_id: { type: "number" },
     status: { type: "number" },
     updated_at: { type: "ref", columnType: "datetime" },

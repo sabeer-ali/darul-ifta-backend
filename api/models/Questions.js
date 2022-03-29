@@ -12,7 +12,7 @@ module.exports = {
     category: { model: "Category" },
     sub_category: { model: "SubCategories" },
     short_question: { type: "string" },
-    question: { type: "string" },
+    question: { type: "string", columnType: "text" },
     language: { model: "Languages" },
     status: { model: "QuestionStatus" },
     mufti: { model: "User" },
@@ -20,7 +20,5 @@ module.exports = {
     verifier: { model: "User" },
     reject_by: { model: "User" },
     reject_reason: { model: "RejectedReasons" },
-    created_at: { type: "ref", columnType: "datetime" },
-    updated_at: { type: "ref", columnType: "datetime" },
   },
 };

@@ -7,7 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: { type: "number", require: true },
     title: { type: "string" },
   },
 };

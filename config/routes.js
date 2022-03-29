@@ -25,10 +25,13 @@ module.exports.routes = {
   "POST /user/signup": "UserController.signup",
   "POST /user/authGoogle": "UserController.authGoogle",
   "GET /user/dashboardDataSets": "UserController.dashboardDataSets",
+  "GET /user/checkmail": "UserController.checkMail",
 
   //Question
   "GET /questions/searchquestions": "QuestionsController.searchQuestions",
   "GET /questions/counts/:id": "QuestionsController.counts",
+  // "GET /questions": "QuestionsController.get",
+  "PUT /questions": "QuestionsController.update",
 
   //subcategories
   "POST /subcategories": "SubCategoriesController.post",
