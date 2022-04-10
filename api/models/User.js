@@ -26,6 +26,7 @@ module.exports = {
     initial_token: { type: "string" },
     email_verified: { type: "number" },
     google_id: { type: "string" },
+    facebook_id: { type: "string" },
     sort_order: { type: "number" },
     address: { type: "string" },
     pin_code: { type: "number" },
