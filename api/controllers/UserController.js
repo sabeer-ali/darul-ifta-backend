@@ -8,6 +8,7 @@ const Joi = require("joi");
 const clientID =
   "756091233237-qdi6vep1g8h25n2o6dmcp6n3vv7t41fi.apps.googleusercontent.com";
 const { OAuth2Client } = require("google-auth-library");
+const { comparePassword } = require("../services/UtilService");
 const client = new OAuth2Client(clientID);
 
 module.exports = {
@@ -87,10 +88,12 @@ module.exports = {
   login: async function (req, res) {
     try {
       console.log("req.allParams()", req.allParams());
+
       const schema = Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
       });
+      // check validations
       const { email, password } = await schema.validateAsync(req.allParams());
       const user = await User.findOne({ email });
 
@@ -101,16 +104,20 @@ module.exports = {
           status: false,
         });
       }
-      const matchPassword = password === user.password;
-      if (!matchPassword) {
+
+      let passwdMatch = await comparePassword(password, user.password);
+
+      if (!passwdMatch) {
         return res.json({
           data: [],
           message: "Password didn't matched",
           status: false,
         });
       }
+
       // const token = await JWTService.issuer({ user: user.id }, "10 day");
       // return res.ok({ token: token });
+
       return res.ok({ data: user, message: "success", status: true });
     } catch (err) {
       if (err.name == "ValidationError") {
@@ -123,10 +130,10 @@ module.exports = {
       return res.serverError(err);
     }
   },
+
   // Check Mail for User
   checkMail: async function (req, res) {
     try {
-      console.log("req.allParams()", req.allParams());
       const schema = Joi.object({
         email: Joi.string().email().required(),
       });
@@ -170,7 +177,7 @@ module.exports = {
     response.mustafthies = await User.count({ user_type: 3 });
     response.questions = await Questions.count();
     response.pending = await Questions.count({ status: 1 });
-    response.answered = await Questions.count({ status: 10 });
+    response.answered = await Questions.count({ status: 8 });
     response.rejected = await Questions.count({ status: 2 });
     return res.ok(response);
   },

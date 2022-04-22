@@ -7,6 +7,6 @@
 
 module.exports = {
   attributes: {
-    title: { type: "string" },
+    title: { type: "string", allowNull: true },
   },
 };

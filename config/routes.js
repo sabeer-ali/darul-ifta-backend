@@ -30,7 +30,7 @@ module.exports.routes = {
   //Question
   "GET /questions/searchquestions": "QuestionsController.searchQuestions",
   "GET /questions/counts/:id": "QuestionsController.counts",
-  // "GET /questions": "QuestionsController.get",
+  "GET /questions": "QuestionsController.get",
   "PUT /questions": "QuestionsController.update",
 
   //subcategories

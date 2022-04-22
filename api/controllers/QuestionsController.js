@@ -56,8 +56,51 @@ module.exports = {
   },
 
   get: async (req, res) => {
+    const {
+      user_id,
+      language,
+      status,
+      sub_category,
+      madhab,
+      id,
+      limit,
+      skip,
+      field,
+      orderBy,
+    } = req.allParams();
+    console.log("Q11", req.allParams());
+    let sortData = [];
+    if (field && orderBy) {
+      sortData.push({
+        [field]: orderBy,
+      });
+    }
     try {
-      let result = await Questions.find();
+      let result = await Questions.find({
+        where: {
+          language,
+          status,
+          sub_category,
+          madhab,
+          id,
+          user_id,
+        },
+        sort: sortData,
+        limit,
+        skip,
+      })
+        .populate("language")
+        .populate("madhab")
+        .populate("category")
+        .populate("sub_category")
+        .populate("language")
+        .populate("mufti")
+        .populate("language")
+        .populate("verifier")
+        .populate("reject_by")
+        .populate("status")
+        .populate("user_id");
+
       res.ok(result);
     } catch (err) {
       res.serverError(err);
@@ -175,6 +218,9 @@ module.exports = {
                 return res.ok(rez);
               });
           });
+      } else {
+        console.log("Status", status);
+        res.ok([]);
       }
     } catch (err) {
       res.serverError(err);
