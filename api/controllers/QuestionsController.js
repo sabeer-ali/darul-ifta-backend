@@ -109,10 +109,9 @@ module.exports = {
 
   update: async (req, res) => {
     try {
-      console.log("Req Data ", req.allParams());
       const { status, mufti, mufti_answered } = req.query;
 
-      const { id, answer, reference, nextStatus, verified_by } =
+      const { id, answer, reject_reason, reference, nextStatus, verified_by } =
         req.allParams();
 
       const populatedList = [
@@ -135,7 +134,46 @@ module.exports = {
           .fetch()
           .exec((err, rex) => {
             Questions.find({ id })
-              .populate(populatedList)
+              .populate("madhab")
+              .populate("category")
+              .populate("user_id")
+              .populate("sub_category")
+              .populate("sub_category")
+              .populate("language")
+              .populate("status")
+              .populate("mufti")
+              .populate("verifier")
+              .populate("reject_by")
+              .populate("reject_reason")
+              .then((rez) => {
+                return res.ok(rez);
+              });
+          });
+      }
+      if (status == 2) {
+        let result = await Questions.find({ id });
+        console.log("result ---- ", result);
+
+        Questions.update({ id })
+          .set({
+            status,
+            reject_by: mufti,
+            reject_reason,
+          })
+          .fetch()
+          .exec((err, rex) => {
+            Questions.find({ id })
+              .populate("madhab")
+              .populate("category")
+              .populate("user_id")
+              .populate("sub_category")
+              .populate("sub_category")
+              .populate("language")
+              .populate("status")
+              .populate("mufti")
+              .populate("verifier")
+              .populate("reject_by")
+              .populate("reject_reason")
               .then((rez) => {
                 return res.ok(rez);
               });
