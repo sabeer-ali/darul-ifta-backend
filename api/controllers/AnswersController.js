@@ -9,15 +9,6 @@ module.exports = {
   post: async (req, res) => {
     const { answer, reference, question_id, status, answered_by, verified_by } =
       req.allParams();
-    console.log(
-      "req data",
-      answer,
-      reference,
-      question_id,
-      status,
-      answered_by,
-      verified_by
-    );
 
     if (status)
       await Questions.update({ id: question_id }).set({
@@ -48,7 +39,6 @@ module.exports = {
     });
 
     let resultData = await Answers.find({ where: { question_id } });
-
     res.ok(resultData);
   },
 };

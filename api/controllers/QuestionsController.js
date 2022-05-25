@@ -30,29 +30,39 @@ module.exports = {
       rejected: 0,
       total: 0,
     };
-    const total = await Questions.count({
-      where: { user_id: id },
-    });
-    const pending = await Questions.count({
-      where: { user_id: id, mufti: null, verifier: null },
-    });
-    const answered = await Questions.count({
-      where: { user_id: id, mufti: { "!=": null }, verifier: { "!=": null } },
-    });
-    const rejected = await Questions.count({
-      where: {
-        user_id: id,
-        mufti: null,
-        verifier: null,
-        reject_by: { "!=": null },
-      },
-    });
 
-    result.total = total;
-    result.pending = pending;
-    result.answered = answered;
-    result.rejected = rejected;
-    return res.ok(result);
+    try {
+      const total = await Questions.count({
+        where: { user_id: id },
+      });
+      const pending = await Questions.count({
+        where: { user_id: id, mufti: null, verifier: null },
+      });
+      const answered = await Questions.count({
+        where: {
+          user_id: id,
+          mufti: { "!=": null },
+          verifier: { "!=": null },
+        },
+      });
+      const rejected = await Questions.count({
+        where: {
+          user_id: id,
+          mufti: null,
+          verifier: null,
+          reject_by: { "!=": null },
+        },
+      });
+
+      result.total = total;
+      result.pending = pending;
+      result.answered = answered;
+      result.rejected = rejected;
+      return res.ok(result);
+    } catch (err) {
+      console.log("Errr", err);
+      res.ok(result);
+    }
   },
 
   get: async (req, res) => {
@@ -67,14 +77,51 @@ module.exports = {
       skip,
       field,
       orderBy,
+      key,
     } = req.allParams();
     console.log("Q11", req.allParams());
+
+    if (key) {
+      let query =
+        "SELECT * FROM questions LEFT JOIN answers ON questions.id = answers.question_id";
+      if (key) {
+        query += ` where questions.question LIKE "%${key}%"  OR answers.answer LIKE "%${key}%" `;
+      }
+
+      Questions.query(query, function (err, rawResult) {
+        if (err) {
+          return res.serverError(err);
+        }
+        return res.ok(rawResult.rows);
+      });
+    }
+
+    if (id) {
+      let views = await Questions.find({ id });
+      // console.log("Views ==> ", views, views[0].views);
+
+      if (views[0]?.views >= 1) {
+        await Questions.update({ id })
+          .set({
+            views: views[0].views + 1,
+          })
+          .fetch();
+      } else {
+        await Questions.update({ id })
+          .set({
+            views: 1,
+          })
+          .fetch();
+      }
+    }
+
     let sortData = [];
     if (field && orderBy) {
       sortData.push({
         [field]: orderBy,
       });
     }
+
     try {
       let result = await Questions.find({
         where: {

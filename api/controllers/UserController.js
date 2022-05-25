@@ -140,7 +140,7 @@ module.exports = {
       const { email } = await schema.validateAsync(req.allParams());
       const user = await User.findOne({
         where: { email },
-        select: ["email", "profile_pic"],
+        select: ["email", "profile_pic", "name", "display_title"],
       });
 
       console.log("user", user);
