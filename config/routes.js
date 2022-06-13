@@ -34,6 +34,7 @@ module.exports.routes = {
   "PUT /questions": "QuestionsController.update",
 
   //subcategories
+  "GET /subcategories": "SubCategoriesController.get",
   "POST /subcategories": "SubCategoriesController.post",
   "PUT /subcategories": "SubCategoriesController.put",
 

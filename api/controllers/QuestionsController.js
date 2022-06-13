@@ -156,11 +156,23 @@ module.exports = {
 
   update: async (req, res) => {
     try {
-      const { status, mufti, mufti_answered } = req.query;
+      const { status } = req.query;
 
-      const { id, answer, reject_reason, reference, nextStatus, verified_by } =
-        req.allParams();
-
+      const {
+        id,
+        answer,
+        reject_reason,
+        reference,
+        nextStatus,
+        verified_by,
+        short_question,
+        question,
+        categories,
+        madhab,
+        language,
+        mufti,
+      } = req.allParams();
+      console.log("req.allParams()", req.allParams());
       const populatedList = [
         "madhab",
         "category",
@@ -303,6 +315,43 @@ module.exports = {
                 return res.ok(rez);
               });
           });
+      } else if (status == 8) {
+        Questions.update({
+          id,
+        })
+          .set({
+            status,
+            short_question,
+            question,
+            category: categories?.category_id,
+            sub_category: categories?.id,
+            madhab,
+            language,
+            reference,
+            answer,
+            mufti,
+            verifier: verified_by,
+          })
+          .fetch()
+          .exec((err, response) => {
+            Answers.update({
+              question_id: id,
+            })
+              .set({
+                answer,
+                status: 8,
+                reference,
+              })
+              .fetch()
+              .exec((err1, response1) => {
+                Questions.find({ id })
+                  .populate(populatedList)
+                  .then((rez) => {
+                    return res.ok(rez);
+                  });
+              });
+          });
+        // res.ok([]);
       } else {
         console.log("Status", status);
         res.ok([]);

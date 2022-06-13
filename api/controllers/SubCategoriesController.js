@@ -22,6 +22,13 @@ module.exports = {
 
   //   res.send("200");
   // },
+  get: async (req, res) => {
+    console.log("req ", req.allParams());
+
+    const { category_id } = req.allParams();
+    let result = await SubCategories.find({ category_id });
+    res.ok(result);
+  },
   post: async (req, res) => {
     const { category_id, title } = req.allParams();
 
