@@ -20,6 +20,6 @@ module.exports = {
     verifier: { model: "User" },
     reject_by: { model: "User" },
     reject_reason: { model: "RejectedReasons" },
-    views: { type: "number" },
+    views: { type: "number", allowNull: true },
   },
 };

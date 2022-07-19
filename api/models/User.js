@@ -11,7 +11,7 @@ module.exports = {
     display_title: { type: "string", allowNull: true },
     email: { type: "string", unique: true, required: true, allowNull: false },
     password: { type: "string" },
-    remember_token: { type: "string" },
+    remember_token: { type: "string", allowNull: true },
     user_type: {
       model: "UserTypes",
     },
@@ -21,7 +21,7 @@ module.exports = {
     madhab: {
       model: "Madhab",
     },
-    username: { type: "string" },
+    username: { type: "string", allowNull: true },
     phone: { type: "string", allowNull: true },
     initial_token: { type: "string", allowNull: true },
     email_verified: { type: "number" },

@@ -79,7 +79,7 @@ module.exports = {
       orderBy,
       key,
     } = req.allParams();
-    console.log("Q11", req.allParams());
+    console.warn("Q11", req.allParams());
 
     if (key) {
       let query =
@@ -136,6 +136,7 @@ module.exports = {
         limit,
         skip,
       })
+        .limit()
         .populate("language")
         .populate("madhab")
         .populate("category")
