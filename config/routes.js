@@ -18,7 +18,9 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  "/": { view: "pages/homepage" },
+  "/": {
+    view: "pages/homepage"
+  },
 
   //User
   "POST /user/login": "UserController.login",
@@ -26,6 +28,9 @@ module.exports.routes = {
   "POST /user/authGoogle": "UserController.authGoogle",
   "GET /user/dashboardDataSets": "UserController.dashboardDataSets",
   "GET /user/checkmail": "UserController.checkMail",
+  "POST /user/sendOtp": "UserController.sendOtp",
+  "POST /user/verifyOtp": "UserController.verifyOtp",
+  "POST /user/resetPassword": "UserController.resetPassword",
 
   //Question
   "GET /questions/searchquestions": "QuestionsController.searchQuestions",
