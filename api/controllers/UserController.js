@@ -54,9 +54,15 @@ module.exports = {
             to: email,
             subject: "OTP for reset your password",
 
-            html: "Hello ! <br><br>This is the One Time Password to reset your password.<br><br><b><u>" +
+            html: "<img src='cid:qasis@tech' height='200' width='200'/> " +
+              " <br> ! <br><br>This is the One Time Password to reset your password.<br><br><b><u><h1>" +
               myOtp +
-              "</b></u><br><br>Thank You..",
+              "</h1></b></u><br><br>Thank You..",
+            attachments: [{
+              filename: 'logo.png',
+              path: 'assets/images/logo.png',
+              cid: 'qasis@tech'
+            }]
           };
           nodemailer
             .createTransport({
